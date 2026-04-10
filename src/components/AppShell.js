@@ -22,7 +22,14 @@ export default function AppShell({ children }) {
     }
 
     const timer = setInterval(() => {
-      setRemainingSeconds((seconds) => Math.max(seconds - 1, 0));
+      setRemainingSeconds((seconds) => {
+        if (seconds <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+
+        return seconds - 1;
+      });
     }, 1000);
 
     return () => clearInterval(timer);

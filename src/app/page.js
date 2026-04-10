@@ -36,6 +36,15 @@ const mentors = [
   { name: "Fatima S.", specialty: "Databases" },
 ];
 
+function getMentorInitials(name) {
+  return name
+    .split(" ")
+    .map((namePart) => namePart[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
 function GlassCard({ className, children }) {
   return (
     <section
@@ -115,7 +124,7 @@ export default function Home() {
                 <li key={mentor.name} className="flex items-center gap-3">
                   <div className="relative">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-500/20 text-sm font-semibold text-violet-200">
-                      {mentor.name.slice(0, 1)}
+                      {getMentorInitials(mentor.name)}
                     </div>
                     <span className="absolute right-0 bottom-0 h-2.5 w-2.5 rounded-full bg-emerald-400 ring-2 ring-slate-950">
                       <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/80" />

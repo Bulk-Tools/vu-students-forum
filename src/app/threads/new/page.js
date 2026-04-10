@@ -128,8 +128,7 @@ export default function NewThreadPage() {
                 className="w-full rounded-lg border border-white/10 bg-slate-900/70 px-4 py-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
               />
               <p className="text-sm text-violet-200">
-                💰 {bounty || 0} Rep Points for a detailed explanation of Data
-                Structures
+                💰 {bounty || 0} Rep Points for the best detailed explanation
               </p>
             </div>
 
