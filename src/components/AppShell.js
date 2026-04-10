@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 
 const FOCUS_SESSION_SECONDS = 25 * 60;
@@ -15,25 +15,33 @@ function formatFocusTime(totalSeconds) {
 export default function AppShell({ children }) {
   const [isFocusModeActive, setIsFocusModeActive] = useState(false);
   const [remainingSeconds, setRemainingSeconds] = useState(FOCUS_SESSION_SECONDS);
+  const timerRef = useRef(null);
 
   useEffect(() => {
     if (!isFocusModeActive) {
       return;
     }
 
-    const timer = setInterval(() => {
-      setRemainingSeconds((seconds) => {
-        if (seconds <= 1) {
-          clearInterval(timer);
-          return 0;
-        }
-
-        return seconds - 1;
-      });
+    timerRef.current = setInterval(() => {
+      setRemainingSeconds((seconds) => Math.max(seconds - 1, 0));
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
   }, [isFocusModeActive]);
+
+  useEffect(() => {
+    if (remainingSeconds > 0 || !timerRef.current) {
+      return;
+    }
+
+    clearInterval(timerRef.current);
+    timerRef.current = null;
+  }, [remainingSeconds]);
 
   const toggleFocusMode = () => {
     setIsFocusModeActive((current) => {

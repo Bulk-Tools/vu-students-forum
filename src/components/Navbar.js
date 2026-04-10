@@ -15,15 +15,20 @@ function NavLink({ href, children }) {
   );
 }
 
-function ScholarProgress() {
+function ScholarProgress({ level = 7, progress = 72 }) {
   return (
     <div className="w-40 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-xl">
       <p className="text-[10px] uppercase tracking-[0.16em] text-slate-400">
         Scholar Level
       </p>
-      <p className="mt-1 text-sm font-semibold text-slate-100">Level 7 • 72%</p>
+      <p className="mt-1 text-sm font-semibold text-slate-100">
+        Level {level} • {progress}%
+      </p>
       <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-700/60">
-        <div className="h-full w-[72%] rounded-full bg-gradient-to-r from-violet-500 to-cyan-400" />
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-violet-500 to-cyan-400"
+          style={{ width: `${progress}%` }}
+        />
       </div>
     </div>
   );
@@ -107,7 +112,7 @@ export default function Navbar({ isFocusModeActive, onToggleFocusMode }) {
             >
               {isFocusModeActive ? "Exit Focus Mode" : "Deep Focus Mode"}
             </button>
-            <ScholarProgress />
+            <ScholarProgress level={7} progress={72} />
             {isSupabaseConfigured && session ? (
               <>
                 <Link

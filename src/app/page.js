@@ -39,6 +39,7 @@ const mentors = [
 function getMentorInitials(name) {
   return name
     .split(" ")
+    .filter(Boolean)
     .map((namePart) => namePart[0])
     .join("")
     .slice(0, 2)
