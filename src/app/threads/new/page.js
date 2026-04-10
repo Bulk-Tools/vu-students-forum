@@ -1,4 +1,8 @@
 export default function NewThreadPage() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 items-center justify-center p-6 md:p-8">
       <section className="w-full max-w-2xl rounded-xl border border-slate-200/50 bg-white/80 p-8 shadow-sm backdrop-blur-md">
@@ -7,7 +11,7 @@ export default function NewThreadPage() {
           Start a meaningful conversation with the VU student community.
         </p>
 
-        <form className="mt-6 space-y-4">
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-1">
             <label htmlFor="title" className="text-sm font-medium text-slate-700">
               Thread Title
@@ -17,6 +21,8 @@ export default function NewThreadPage() {
               name="title"
               type="text"
               placeholder="What would you like to discuss?"
+              required
+              aria-required="true"
               className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
@@ -30,6 +36,8 @@ export default function NewThreadPage() {
               name="category"
               type="text"
               placeholder="e.g. Academics, Exams, Study Tips"
+              required
+              aria-required="true"
               className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
@@ -43,6 +51,8 @@ export default function NewThreadPage() {
               name="content"
               rows={6}
               placeholder="Write your post here..."
+              required
+              aria-required="true"
               className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>

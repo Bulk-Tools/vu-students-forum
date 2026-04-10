@@ -68,14 +68,17 @@ export default function Navbar() {
           </span>
           <ul className="flex items-center gap-6 text-sm font-medium text-slate-500">
             <li>
-              <Link href="/" className="transition hover:text-slate-900">
+              <Link
+                href="/"
+                className="transition-colors hover:text-slate-900 focus:rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
                 Home
               </Link>
             </li>
             <li>
               <Link
                 href="/threads/new"
-                className="transition hover:text-slate-900"
+                className="transition-colors hover:text-slate-900 focus:rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 New Thread
               </Link>
