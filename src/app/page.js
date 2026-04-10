@@ -1,65 +1,38 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <header className="border-b border-slate-200 bg-white/90">
+        <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+          <span className="text-lg font-semibold">Virtual University</span>
+          <ul className="flex items-center gap-6 text-sm font-medium text-slate-700">
+            <li>
+              <a href="#">Home</a>
+            </li>
+            <li>
+              <a href="#">Forums</a>
+            </li>
+            <li>
+              <a href="#">Help</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <main className="mx-auto flex min-h-[calc(100vh-73px)] w-full max-w-6xl items-center px-6 py-16">
+        <section className="max-w-2xl space-y-6">
+          <h1 className="text-5xl font-bold tracking-tight sm:text-6xl">
+            VU Students Forum
+          </h1>
+          <p className="text-lg text-slate-600 sm:text-xl">
+            Connect, Learn, and Grow with Fellow VU Students
           </p>
-        </div>
-        <div className={styles.ctas}>
           <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#"
+            className="inline-flex rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            Join Discussion
           </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        </section>
       </main>
     </div>
   );
