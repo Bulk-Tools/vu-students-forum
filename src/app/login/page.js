@@ -39,10 +39,10 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-1 items-center justify-center px-6 py-16">
-      <section className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+    <main className="mx-auto flex w-full max-w-7xl flex-1 items-center justify-center p-6 md:p-8">
+      <section className="w-full max-w-md rounded-xl border border-slate-200/50 bg-white/80 p-8 shadow-sm backdrop-blur-md">
         <h1 className="text-2xl font-bold text-slate-900">Log In</h1>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-slate-500">
           Welcome back. Enter your account details.
         </p>
         {!isSupabaseConfigured ? (
@@ -63,7 +63,7 @@ export default function LoginPage() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               required
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -80,7 +80,7 @@ export default function LoginPage() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               required
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -93,15 +93,18 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-transform hover:bg-indigo-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isLoading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-slate-600">
+        <p className="mt-4 text-sm text-slate-500">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="font-semibold text-blue-600 hover:text-blue-700">
+          <Link
+            href="/signup"
+            className="font-semibold text-indigo-600 hover:text-indigo-700"
+          >
             Sign Up
           </Link>
         </p>
