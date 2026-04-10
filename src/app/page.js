@@ -1,170 +1,352 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 
-const trendingPods = [
+const navigationItems = [
+  { name: "Home", icon: "⌂", active: true },
+  { name: "All Forums", icon: "◉" },
+  { name: "New Posts", icon: "+" },
+  { name: "Study Resources", icon: "☰" },
+  { name: "Following", icon: "★" },
+];
+
+const popularTags = [
+  { tag: "#cs101", count: "11,284 posts", icon: "⌘" },
+  { tag: "#midterms", count: "9,931 posts", icon: "◔" },
+  { tag: "#assignments", count: "14,205 posts", icon: "✓" },
+  { tag: "#group-study", count: "5,482 posts", icon: "◍" },
+];
+
+const forumSections = [
   {
-    id: "urgent-help-data-structures",
-    title: "Need help with AVL tree rotations before quiz",
-    category: "⚡ Urgent Help",
-    summary:
-      "Looking for a step-by-step walkthrough with edge cases for insertion and deletion balancing.",
+    id: "core-subjects",
+    title: "CORE SUBJECTS",
+    forums: [
+      {
+        title: "Data Structures",
+        views: "5.2K",
+        replies: "38.6K",
+        latestTitle: "Help with AVL insertion edge case",
+        timestamp: "12 min ago",
+        avatar: "AK",
+      },
+      {
+        title: "Operating Systems",
+        views: "4.1K",
+        replies: "25.6K",
+        latestTitle: "Process scheduling quiz prep",
+        timestamp: "39 min ago",
+        avatar: "ZR",
+      },
+      {
+        title: "Database Systems",
+        views: "6.5K",
+        replies: "50.7K",
+        latestTitle: "Normalization practice thread",
+        timestamp: "1 hr ago",
+        avatar: "HS",
+      },
+      {
+        title: "Software Engineering",
+        views: "5.3K",
+        replies: "43.3K",
+        latestTitle: "SRS template peer review",
+        timestamp: "2 hrs ago",
+        avatar: "FA",
+      },
+    ],
   },
   {
-    id: "midterm-prep-ai",
-    title: "Midterm prep sprint: Intro to AI weekly plan",
-    category: "📚 Midterm Prep",
-    summary:
-      "Share your two-week revision sequence, mock-test strategy, and must-practice topics.",
+    id: "off-topic",
+    title: "OFF TOPIC",
+    forums: [
+      {
+        title: "General Talk",
+        views: "5.2K",
+        replies: "38.6K",
+        latestTitle: "What keeps you productive?",
+        timestamp: "20 min ago",
+        avatar: "MS",
+      },
+      {
+        title: "Career Advice",
+        views: "4.1K",
+        replies: "25.6K",
+        latestTitle: "Internship interview resources",
+        timestamp: "58 min ago",
+        avatar: "NB",
+      },
+    ],
   },
   {
-    id: "code-review-react",
-    title: "Review my React hooks optimization approach",
-    category: "💻 Code Review",
-    summary:
-      "Need feedback on reducing rerenders and improving component responsiveness.",
+    id: "help-desk",
+    title: "HELP DESK",
+    forums: [
+      {
+        title: "Course Enrollment",
+        views: "2.8K",
+        replies: "17.2K",
+        latestTitle: "Fee challan issue guidance",
+        timestamp: "45 min ago",
+        avatar: "UM",
+      },
+      {
+        title: "LMS Support",
+        views: "3.3K",
+        replies: "22.4K",
+        latestTitle: "Assignment upload not working",
+        timestamp: "1 hr ago",
+        avatar: "RN",
+      },
+    ],
   },
 ];
 
-const liveRooms = [
-  { name: "DSA Lab", members: 24 },
-  { name: "Calculus Clinic", members: 17 },
-  { name: "Web Dev Studio", members: 31 },
-];
+const activityItems = {
+  posts: [
+    { title: "How do you debug recursion quickly?", timestamp: "replied 20 min ago", avatar: "AS" },
+    { title: "Compiler lab thread for CS304", timestamp: "replied 55 min ago", avatar: "ZM" },
+    { title: "OOP assignment rubric discussion", timestamp: "replied today at 3:35 PM", avatar: "FK" },
+    { title: "Quiz #2 prep mega-thread", timestamp: "replied today at 5:12 PM", avatar: "SA" },
+  ],
+  threads: [
+    { title: "Need notes for MTH202 chapter 6", timestamp: "started 10 min ago", avatar: "HR" },
+    { title: "Past papers for CS201 request", timestamp: "started 44 min ago", avatar: "UA" },
+    { title: "Group project teammate search", timestamp: "started today at 1:00 PM", avatar: "NM" },
+    { title: "How to prepare for final viva?", timestamp: "started today at 3:12 PM", avatar: "BA" },
+  ],
+};
 
-const mentors = [
-  { name: "Ayesha K.", specialty: "Algorithms" },
-  { name: "Usman R.", specialty: "Operating Systems" },
-  { name: "Fatima S.", specialty: "Databases" },
-];
-
-function getMentorInitials(name) {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .map((namePart) => namePart[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
-function GlassCard({ className, children }) {
+function LeftSidebar() {
   return (
-    <section
-      className={`rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-2xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(139,92,246,0.15)] ${className}`}
-    >
-      {children}
-    </section>
+    <aside className="space-y-8 rounded-xl border border-gray-800 bg-[#1A1D21] p-5">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/20 text-xl text-emerald-400">
+          ⌁
+        </div>
+        <div>
+          <p className="font-semibold text-gray-200">VU Students Forum</p>
+          <p className="text-xs text-gray-500">Student community board</p>
+        </div>
+      </div>
+
+      <nav>
+        <ul className="space-y-1">
+          {navigationItems.map((item) => (
+            <li key={item.name}>
+              <button
+                type="button"
+                className={`flex w-full items-center gap-3 border-l-2 px-3 py-2 text-left text-sm transition-colors ${
+                  item.active
+                    ? "border-emerald-400 text-emerald-400"
+                    : "border-transparent text-gray-300 hover:text-gray-200"
+                }`}
+              >
+                <span className="text-base">{item.icon}</span>
+                <span>{item.name}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div className="border-t border-gray-800 pt-6">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-200">Popular Tags</h2>
+          <span className="text-xs text-emerald-400">See all</span>
+        </div>
+        <ul className="space-y-3">
+          {popularTags.map((tag) => (
+            <li key={tag.tag} className="flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/15 text-sm text-emerald-400">
+                {tag.icon}
+              </span>
+              <div>
+                <p className="font-medium text-gray-200">{tag.tag}</p>
+                <p className="text-xs text-gray-500">{tag.count}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
   );
 }
 
-function TagPill({ label }) {
+function ForumCard({ forum }) {
   return (
-    <span className="rounded-full border border-violet-300/30 bg-violet-500/15 px-3 py-1 text-xs font-semibold text-violet-200">
-      {label}
-    </span>
+    <article className="rounded-xl border border-gray-800 bg-[#1A1D21] p-4">
+      <header className="flex items-start justify-between gap-4">
+        <h3 className="text-lg font-semibold text-gray-200">{forum.title}</h3>
+        <p className="text-xs text-gray-500">
+          {forum.views} views · {forum.replies} replies
+        </p>
+      </header>
+      <div className="mt-4 flex items-center gap-3 rounded-lg border border-gray-800 bg-[#16191d] p-3">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/25 text-xs font-semibold text-emerald-300">
+          {forum.avatar}
+        </span>
+        <div>
+          <p className="text-sm text-gray-200">{forum.latestTitle}</p>
+          <p className="text-xs text-gray-500">{forum.timestamp}</p>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function RightSidebar({ activeTab, onChangeTab }) {
+  return (
+    <aside className="space-y-5">
+      <section className="rounded-xl bg-gradient-to-br from-emerald-400 to-green-600 p-5 text-black">
+        <h2 className="text-2xl font-semibold">Join the latest study group</h2>
+        <p className="mt-2 text-sm">Meet classmates, solve weekly tasks, and stay on track together.</p>
+        <button
+          type="button"
+          className="mt-4 rounded-lg bg-[#121417] px-4 py-2 text-sm font-semibold text-gray-200"
+        >
+          Join now
+        </button>
+      </section>
+
+      <section className="rounded-xl border border-gray-800 bg-[#1A1D21] p-5">
+        <div className="flex gap-5 border-b border-gray-800 pb-3 text-lg font-medium">
+          <button
+            type="button"
+            onClick={() => onChangeTab("posts")}
+            className={`pb-1 ${
+              activeTab === "posts"
+                ? "border-b-2 border-emerald-400 text-emerald-400"
+                : "text-gray-500"
+            }`}
+          >
+            New Posts
+          </button>
+          <button
+            type="button"
+            onClick={() => onChangeTab("threads")}
+            className={`pb-1 ${
+              activeTab === "threads"
+                ? "border-b-2 border-emerald-400 text-emerald-400"
+                : "text-gray-500"
+            }`}
+          >
+            New Threads
+          </button>
+        </div>
+
+        <ul className="mt-4 space-y-4">
+          {activityItems[activeTab].map((item) => (
+            <li key={`${activeTab}-${item.title}`} className="flex items-start gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/25 text-xs font-semibold text-emerald-300">
+                {item.avatar}
+              </span>
+              <div>
+                <p className="font-semibold text-gray-200">{item.title}</p>
+                <p className="text-sm text-gray-500">{item.timestamp}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </aside>
   );
 }
 
 export default function Home() {
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [activeActivityTab, setActiveActivityTab] = useState("posts");
+  const [openSections, setOpenSections] = useState({
+    "core-subjects": true,
+    "off-topic": true,
+    "help-desk": true,
+  });
+
+  const toggleSection = (sectionId) => {
+    setOpenSections((currentState) => ({
+      ...currentState,
+      [sectionId]: !currentState[sectionId],
+    }));
+  };
+
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-1 p-6 md:p-8">
-      <section className="w-full space-y-8">
-        <div className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight text-slate-100 sm:text-5xl">
-            VU Study OS
-          </h1>
-          <p className="max-w-2xl text-lg text-slate-300">
-            Your neon-glass command center for Study Pods, mentorship, and
-            high-focus collaboration.
-          </p>
-          <Link
-            href="/threads/new"
-            className="inline-flex rounded-lg bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:bg-violet-500 hover:shadow-[0_8px_30px_rgba(139,92,246,0.15)]"
-          >
-            Launch a Study Pod
-          </Link>
+    <main className="min-h-screen bg-[#121417]">
+      <div className="mx-auto mb-6 flex w-full max-w-[1600px] items-center justify-between px-6 pt-6 lg:hidden">
+        <button
+          type="button"
+          onClick={() => setIsMobileSidebarOpen((current) => !current)}
+          className="rounded-lg border border-gray-800 bg-[#1A1D21] px-4 py-2 text-sm font-semibold text-gray-200"
+        >
+          ☰ Menu
+        </button>
+        <Link
+          href="/threads/new"
+          className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-black"
+        >
+          + Thread
+        </Link>
+      </div>
+
+      {isMobileSidebarOpen ? (
+        <div className="mx-auto mb-8 grid w-full max-w-[1600px] grid-cols-1 gap-6 px-6 lg:hidden">
+          <LeftSidebar />
+          <RightSidebar activeTab={activeActivityTab} onChangeTab={setActiveActivityTab} />
+        </div>
+      ) : null}
+
+      <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-8 p-6 lg:grid-cols-[240px_1fr_300px]">
+        <div className="hidden lg:block">
+          <LeftSidebar />
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-12">
-          <GlassCard className="lg:col-span-4">
-            <h2 className="text-lg font-semibold text-slate-100">Live Study Rooms</h2>
-            <ul className="mt-4 space-y-3">
-              {liveRooms.map((room) => (
-                <li key={room.name} className="flex items-center justify-between">
-                  <span className="font-medium text-slate-200">{room.name}</span>
-                  <span className="text-sm text-slate-400">{room.members} active</span>
-                </li>
-              ))}
-            </ul>
-          </GlassCard>
+        <section className="space-y-6">
+          <header className="flex items-center justify-between">
+            <h1 className="text-4xl font-bold text-gray-200">Explore Forums</h1>
+            <Link
+              href="/threads/new"
+              className="hidden rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-black lg:inline-flex"
+            >
+              + Thread
+            </Link>
+          </header>
 
-          <GlassCard className="lg:col-span-8">
-            <h2 className="text-lg font-semibold text-slate-100">Trending Pods</h2>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              {trendingPods.map((pod) => (
-                <Link
-                  key={pod.id}
-                  href="/threads/new"
-                  className="rounded-xl border border-white/10 bg-slate-900/50 p-4 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(139,92,246,0.15)]"
-                >
-                  <article>
-                    <TagPill label={pod.category} />
-                    <h3 className="mt-3 text-base font-semibold text-slate-100">
-                      {pod.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-slate-300">{pod.summary}</p>
-                  </article>
-                </Link>
-              ))}
-            </div>
-          </GlassCard>
+          <div className="space-y-4">
+            {forumSections.map((section) => {
+              const isOpen = openSections[section.id];
 
-          <GlassCard className="lg:col-span-5">
-            <h2 className="text-lg font-semibold text-slate-100">Top Mentors</h2>
-            <ul className="mt-4 space-y-4">
-              {mentors.map((mentor) => (
-                <li key={mentor.name} className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-500/20 text-sm font-semibold text-violet-200">
-                      {getMentorInitials(mentor.name)}
-                    </div>
-                    <span className="absolute right-0 bottom-0 h-2.5 w-2.5 rounded-full bg-emerald-400 ring-2 ring-slate-950">
-                      <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/80" />
+              return (
+                <section key={section.id} className="rounded-xl border border-gray-800 bg-[#1A1D21] p-4">
+                  <button
+                    type="button"
+                    onClick={() => toggleSection(section.id)}
+                    className="mb-4 flex w-full items-center justify-between text-left"
+                  >
+                    <h2 className="text-sm font-semibold tracking-[0.18em] text-gray-500">
+                      {section.title}
+                    </h2>
+                    <span className="text-2xl leading-none text-emerald-400">
+                      {isOpen ? "−" : "+"}
                     </span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-slate-100">{mentor.name}</p>
-                    <p className="text-sm text-slate-400">{mentor.specialty}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </GlassCard>
+                  </button>
 
-          <GlassCard className="lg:col-span-7">
-            <h2 className="text-lg font-semibold text-slate-100">My Dashboard</h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-xl border border-white/10 bg-slate-900/50 p-4">
-                <p className="text-xs uppercase tracking-wider text-slate-400">
-                  Pods Answered
-                </p>
-                <p className="mt-2 text-2xl font-semibold text-slate-100">18</p>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-slate-900/50 p-4">
-                <p className="text-xs uppercase tracking-wider text-slate-400">
-                  Reputation
-                </p>
-                <p className="mt-2 text-2xl font-semibold text-slate-100">1,240</p>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-slate-900/50 p-4">
-                <p className="text-xs uppercase tracking-wider text-slate-400">
-                  Focus Streak
-                </p>
-                <p className="mt-2 text-2xl font-semibold text-slate-100">6 days</p>
-              </div>
-            </div>
-          </GlassCard>
+                  {isOpen ? (
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                      {section.forums.map((forum) => (
+                        <ForumCard key={forum.title} forum={forum} />
+                      ))}
+                    </div>
+                  ) : null}
+                </section>
+              );
+            })}
+          </div>
+        </section>
+
+        <div className="hidden lg:block">
+          <RightSidebar activeTab={activeActivityTab} onChangeTab={setActiveActivityTab} />
         </div>
-      </section>
+      </div>
     </main>
   );
 }

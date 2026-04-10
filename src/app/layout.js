@@ -2,14 +2,14 @@ import AppShell from "@/components/AppShell";
 import "./globals.css";
 
 export const metadata = {
-  title: "VU Study OS",
-  description: "A next-gen study operating system for Virtual University students.",
+  title: "VU Students Forum",
+  description: "Student discussion dashboard for Virtual University forums.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-slate-950 text-slate-100">
+      <body className="bg-[#121417] text-gray-200 antialiased">
         <AppShell>{children}</AppShell>
       </body>
     </html>
