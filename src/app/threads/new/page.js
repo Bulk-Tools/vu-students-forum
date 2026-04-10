@@ -1,3 +1,5 @@
+"use client";
+
 export default function NewThreadPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
