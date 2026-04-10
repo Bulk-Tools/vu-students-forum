@@ -60,19 +60,28 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b border-slate-200 bg-white/90">
-      <nav className="mx-auto w-full max-w-6xl px-6 py-4">
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-semibold">Virtual University</span>
-          <ul className="flex items-center gap-6 text-sm font-medium text-slate-700">
+    <header className="p-6">
+      <nav className="mx-auto w-full max-w-7xl rounded-xl border border-slate-200/50 bg-white/80 px-6 py-4 backdrop-blur-md">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <span className="text-lg font-semibold text-slate-900">
+            Virtual University
+          </span>
+          <ul className="flex items-center gap-6 text-sm font-medium text-slate-500">
             <li>
-              <Link href="/">Home</Link>
+              <Link
+                href="/"
+                className="transition-colors hover:text-slate-900 focus:rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                Home
+              </Link>
             </li>
             <li>
-              <Link href="/forums">Forums</Link>
-            </li>
-            <li>
-              <Link href="/help">Help</Link>
+              <Link
+                href="/threads/new"
+                className="transition-colors hover:text-slate-900 focus:rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                New Thread
+              </Link>
             </li>
           </ul>
           <div className="flex items-center gap-3">
@@ -80,14 +89,14 @@ export default function Navbar() {
               <>
                 <Link
                   href="/profile"
-                  className="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                  className="rounded-lg border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
                 >
                   My Profile
                 </Link>
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
+                  className="rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-transform hover:bg-indigo-700 active:scale-95"
                 >
                   Log Out
                 </button>
@@ -96,13 +105,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                  className="rounded-lg border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
                 >
                   Log In
                 </Link>
                 <Link
                   href="/signup"
-                  className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                  className="rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition-transform hover:bg-indigo-700 active:scale-95"
                 >
                   Sign Up
                 </Link>
