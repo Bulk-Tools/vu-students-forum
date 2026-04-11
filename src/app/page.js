@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 const navigation = [
   { name: "Home", count: null, active: true },
@@ -22,7 +22,6 @@ const popularTags = [
 const forumSections = [
   {
     category: "CORE SUBJECTS",
-    open: true,
     items: [
       {
         id: 1,
@@ -68,7 +67,6 @@ const forumSections = [
   },
   {
     category: "OFF TOPIC",
-    open: true,
     items: [
       {
         id: 5,
@@ -94,7 +92,6 @@ const forumSections = [
   },
   {
     category: "HELP DESK",
-    open: false,
     items: [
       {
         id: 7,
@@ -119,6 +116,8 @@ const forumSections = [
     ],
   },
 ];
+
+const defaultOpenCategories = ["CORE SUBJECTS", "OFF TOPIC"];
 
 const activityData = {
   posts: [
@@ -300,15 +299,10 @@ export default function Dashboard() {
   const [openSections, setOpenSections] = useState(() => {
     const initialState = {};
     forumSections.forEach((section) => {
-      initialState[section.category] = section.open;
+      initialState[section.category] = defaultOpenCategories.includes(section.category);
     });
     return initialState;
   });
-
-  const sectionsWithState = useMemo(
-    () => forumSections.map((section) => ({ ...section, isOpen: openSections[section.category] })),
-    [openSections]
-  );
 
   const toggleSection = (category) => {
     setOpenSections((prev) => ({
@@ -354,7 +348,7 @@ export default function Dashboard() {
             </Link>
           </header>
 
-          {sectionsWithState.map((group) => (
+          {forumSections.map((group) => (
             <section key={group.category} className="rounded-xl border border-gray-800 bg-[#16191d] p-5">
               <button
                 type="button"
@@ -362,10 +356,10 @@ export default function Dashboard() {
                 onClick={() => toggleSection(group.category)}
               >
                 <h2 className="text-xs font-semibold tracking-[0.2em] text-gray-500">{group.category}</h2>
-                <span className="text-2xl leading-none text-emerald-400">{group.isOpen ? "−" : "+"}</span>
+                <span className="text-2xl leading-none text-emerald-400">{openSections[group.category] ? "−" : "+"}</span>
               </button>
 
-              {group.isOpen && (
+              {openSections[group.category] && (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   {group.items.map((item) => (
                     <article key={item.id} className="rounded-xl border border-gray-800 bg-[#1A1D21] p-4">
