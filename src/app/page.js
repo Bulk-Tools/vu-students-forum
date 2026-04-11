@@ -305,7 +305,7 @@ export default function Dashboard() {
     return initialState;
   });
 
-  const renderedSections = useMemo(
+  const sectionsWithState = useMemo(
     () => forumSections.map((section) => ({ ...section, isOpen: openSections[section.category] })),
     [openSections]
   );
@@ -354,7 +354,7 @@ export default function Dashboard() {
             </Link>
           </header>
 
-          {renderedSections.map((group) => (
+          {sectionsWithState.map((group) => (
             <section key={group.category} className="rounded-xl border border-gray-800 bg-[#1A1D21] p-5">
               <button
                 type="button"
