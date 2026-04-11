@@ -355,7 +355,7 @@ export default function Dashboard() {
           </header>
 
           {sectionsWithState.map((group) => (
-            <section key={group.category} className="rounded-xl border border-gray-800 bg-[#1A1D21] p-5">
+            <section key={group.category} className="rounded-xl border border-gray-800 bg-[#16191d] p-5">
               <button
                 type="button"
                 className="mb-4 flex w-full items-center justify-between text-left"
